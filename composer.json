@@ -1,0 +1,42 @@
+{
+    "name": "crowley/repository",
+    "description": "Base repository implementation for Laravel",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Liu Khang",
+            "email": "liukhangdev@gmail.com"
+        }
+    ],
+    "require": {
+        "php" : "^7.2.5"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.0|^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Crowley\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Crowley\\Test\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Crowley\\RepositoryServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
