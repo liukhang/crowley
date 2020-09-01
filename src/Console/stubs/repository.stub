@@ -3,9 +3,13 @@
 namespace DummyNamespace;
 
 use Crowley\Repository\AbstractRepository;
-use App\Repositories\Contracts\DummyClassInterface;
+use DummyNamespace\DummyClassInterface;
+use App\Model;
 
 class DummyClass extends AbstractRepository implements DummyClassInterface
 {
-    //
+    public function __construct(Model $model)
+    {
+        $this->model = $model;
+    }
 }

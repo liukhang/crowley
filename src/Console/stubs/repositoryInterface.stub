@@ -2,7 +2,7 @@
 
 namespace DummyNamespace;
 
-use Crowley\Repository\Contracts\RepositoryInterface;
+use Crowley\Repository\RepositoryInterface;
 
 interface DummyClass extends RepositoryInterface
 {

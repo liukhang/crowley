@@ -23,31 +23,6 @@ class RepositoryMakeCommand extends GeneratorCommand
     protected $description = 'Create a new repository class';
 
     /**
-     * Execute the console command.
-     *
-     * @return void
-     */
-    public function handle()
-    {
-        if (parent::handle() === false && !$this->option('force')) {
-            return;
-        }
-
-        if ($this->option('interface')) {
-            $this->createRepositoryInterface();
-        }
-    }
-
-    protected function createRepositoryInterface()
-    {
-        $repositoryName = Str::studly(class_basename($this->argument('name')));
-
-        $this->call('make:interface', [
-            'name' => "{$repositoryName}Interface",
-        ]);
-    }
-
-    /**
      * The type of class being generated.
      *
      * @var string
@@ -55,13 +30,33 @@ class RepositoryMakeCommand extends GeneratorCommand
     protected $type = 'Repository';
 
     /**
-     * Get the stub file for the generator.
+     * Execute the console command.
      *
-     * @return string
+     * @return void
      */
-    protected function getStub()
+    public function handle()
     {
-        return __DIR__ . '/stubs/repository.stub';
+        if (parent::handle() === false && !$this->option('force')) {
+            return false;
+        }
+
+        if ($this->option('interface')) {
+            $this->createRepositoryInterface();
+        }
+    }
+
+    /**
+     * Create a model factory for the model.
+     *
+     * @return void
+     */
+    protected function createRepositoryInterface()
+    {
+        $repositoryName = Str::studly(class_basename($this->argument('name')));
+
+        $this->call('make:interface', [
+            'name' => "{$repositoryName}Interface"
+        ]);
     }
 
     /**
@@ -73,6 +68,29 @@ class RepositoryMakeCommand extends GeneratorCommand
     protected function getDefaultNamespace($rootNamespace)
     {
         return $rootNamespace . '\Repositories';
+    }
+
+    /**
+     * Get the stub file for the generator.
+     *
+     * @return string
+     */
+    protected function getStub()
+    {
+        return $this->resolveStubPath('/stubs/repository.stub');
+    }
+
+    /**
+     * Resolve the fully-qualified path to the stub.
+     *
+     * @param  string  $stub
+     * @return string
+     */
+    protected function resolveStubPath($stub)
+    {
+        return file_exists($customPath = $this->laravel->basePath(trim($stub, '/')))
+            ? $customPath
+            : __DIR__ . $stub;
     }
 
     /**

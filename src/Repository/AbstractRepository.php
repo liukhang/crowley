@@ -4,15 +4,15 @@ namespace Crowley\Repository;
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Database\Eloquent\Model;
-use Crowley\Repository\Contracts\RepositoryInterface;
+use Crowley\Repository\RepositoryInterface;
 use Illuminate\Database\Query\Builder;
 
 /**
  * Class AbstractRepository
  *
- * @package Kenini\Repository
+ * @package Crowley\Repository
  */
-class AbstractRepository implements RepositoryInterface
+abstract class AbstractRepository implements RepositoryInterface
 {
     /**
      * @var Model
@@ -29,149 +29,53 @@ class AbstractRepository implements RepositoryInterface
         $this->model = $model;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function find(array $conditions = [])
+    public function all($columns = ['*'])
     {
-        return $this->model->where($conditions)->get();
+        return $this->model->all($columns);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function findOne(array $conditions)
-    {
-        return $this->model->where($conditions)->first();
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function findById(int $id)
     {
         return $this->model->findOrFail($id);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function create(array $attributes)
+    public function find(array $conditions = [])
     {
-        return $this->model->create($attributes);
+        return $this->model->where($conditions)->get();
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function update(Model $model, array $attributes = [])
+    public function findOne(array $conditions)
     {
-        return $model->update($attributes);
+        return $this->model->where($conditions)->first();
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function save(Model $model)
-    {
-        return $model->save();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function delete(Model $model)
-    {
-        return $model->delete();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function get($query)
-    {
-        return $query->get();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function destroy(array $ids)
-    {
-        return $this->model->destroy($ids);
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function findCount(array $conditions)
     {
         return $this->model->where($conditions)->count();
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function toBase($query)
-    {
-        return $query->toBase();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function updateMultiple(Builder $query, array $attributes = [])
-    {
-        return $query->update($attributes);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function updateOrCreate(array $attributes, array $values)
-    {
-        return $this->model->updateOrCreate($attributes, $values);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function findAll($columns = ['*'])
-    {
-        return $this->model->all($columns);
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function findByIds(array $ids, $columns = ['*'])
     {
         return $this->model->whereIn('id', $ids)->get($columns);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function model()
+    public function create(array $attributes)
     {
-        return get_class($this->model);
+        return $this->model->create($attributes);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function makeModel()
+    public function update(int $id, array $attributes = [])
     {
-        $this->model = App::make($this->model());
-
-        return $this->model;
+        return $this->model::find($id)->update($attributes);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function resetModel()
+    public function destroy($ids)
     {
-        return $this->makeModel();
+        return $this->model->destroy($ids);
+    }
+
+    public function updateOrCreate(array $attributes, array $values)
+    {
+        return $this->model->updateOrCreate($attributes, $values);
     }
 }
