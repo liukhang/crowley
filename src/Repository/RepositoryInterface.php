@@ -108,4 +108,15 @@ interface RepositoryInterface
      * @throws Exception
      */
     public function updateOrCreate(array $attributes, array $values);
+
+    /**
+     * panigate
+     *
+     * @param  int $paginate
+     *
+     * @return void
+     *
+     * @throws Exception
+     */
+    public function getPaginate($paginate);
 }
