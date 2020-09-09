@@ -78,11 +78,4 @@ abstract class AbstractRepository implements RepositoryInterface
     {
         return $this->model->updateOrCreate($attributes, $values);
     }
-
-    public function getPaginate($paginate)
-    {
-        $model = $this->model::paginate($paginate);
-
-        return empty($model) ? [] : $model;
-    }
 }
