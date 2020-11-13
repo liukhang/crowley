@@ -108,4 +108,15 @@ interface RepositoryInterface
      * @throws Exception
      */
     public function updateOrCreate(array $attributes, array $values);
+
+    /**
+     * get latest by column
+     *
+     * @param  string $attributes
+     *
+     * @return void
+     *
+     * @throws Exception
+     */
+    public function getLatest($column);
 }

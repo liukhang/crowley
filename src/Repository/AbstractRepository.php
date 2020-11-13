@@ -78,4 +78,9 @@ abstract class AbstractRepository implements RepositoryInterface
     {
         return $this->model->updateOrCreate($attributes, $values);
     }
+
+    public function getLatest($column)
+    {
+        return $this->model->latest($column);
+    }
 }
