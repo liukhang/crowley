@@ -119,4 +119,15 @@ interface RepositoryInterface
      * @throws Exception
      */
     public function getLatest($column);
+
+    /**
+     * get filter, use together https://github.com/liukhang/crowleyfilter
+     *
+     * @param  string $array
+     *
+     * @return void
+     *
+     * @throws Exception
+     */
+    public function filter($data);
 }

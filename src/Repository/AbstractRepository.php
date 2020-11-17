@@ -83,4 +83,12 @@ abstract class AbstractRepository implements RepositoryInterface
     {
         return $this->model->latest($column);
     }
+
+    /**
+     * use together https://github.com/liukhang/crowleyfilter
+     */
+    public function filter($data)
+    {
+        return $this->model->filter($data);
+    }
 }
